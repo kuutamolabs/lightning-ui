@@ -7,11 +7,8 @@
     , ...
     }:
     let
-      rust = (pkgs.rust-bin.stable.latest.default.override {
-              extensions = [ "rust-src" ];
-              targets = [ "wasm32-unknown-unknown" ];
-            });
       formatters = [
+        pkgs.rustfmt
         pkgs.treefmt
         pkgs.nixpkgs-fmt
       ];
@@ -25,12 +22,12 @@
             pkgs.nix-update
 
             # rust dev
-            rust
             pkgs.cargo-watch
             pkgs.trunk
-          ];
+          ]
+          ++ self'.packages.lightning-gui.buildInputs;
         RUST_BACKTRACE = 1;
-        nativeBuildInputs = [ rust ];
+        nativeBuildInputs = [ ] ++ self'.packages.lightning-gui.nativeBuildInputs;
         passthru = {
           inherit formatters;
         };

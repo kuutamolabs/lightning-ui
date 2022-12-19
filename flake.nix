@@ -1,5 +1,5 @@
 {
-  description = "Bitcoin Lightning node";
+  description = "Bitcoin Lightning GUI";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable-small";
@@ -22,6 +22,7 @@
   outputs = { self, flake-parts, nixpkgs, rust-overlay, ... }:
     flake-parts.lib.mkFlake { inherit self; } {
       imports = [
+        ./nix/pkgs/flake-module.nix
         ./nix/checks/flake-module.nix
         ./nix/shell.nix
       ];

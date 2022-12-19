@@ -5,5 +5,4 @@ edition = "2021"
 
 [dependencies]
 sycamore = "0.8"
-#api = { git = "https://github.com/kuutamolabs/lightning-knd", package = "api" }
-api = { path = "../lightning-knd/api" }
+api = { git = "https://github.com/kuutamolabs/lightning-knd", package = "api", rev = "528982751e985e47ac8f3615001f501af8cc5615"}
