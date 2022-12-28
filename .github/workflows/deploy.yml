@@ -2,9 +2,15 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main
+      - [$default-branch]
+  workflow_dispatch:
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -49,4 +55,18 @@ jobs:
         with:
           name: 'github-pages'
           path: ${{ runner.temp }}/artifact.tar
-          retention-days: 1000
+          retention-days: 90
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
