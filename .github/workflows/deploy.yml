@@ -33,7 +33,7 @@ jobs:
       - name: Build
         shell: sh
         run:
-          trunk build --release
+          trunk build --release --public-url /lightning-ui
 
       - name: Archive artifact
         shell: sh
