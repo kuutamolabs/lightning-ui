@@ -4,33 +4,34 @@ on:
     branches:
       - main
 jobs:
-  steps:
-    - name: Build
-      uses: jetli/trunk-action@v0.2.0
-      with:
-        version: 'latest'
-      shell: sh
-      run:
-        trunk build --release
+  deploy:
+    steps:
+      - name: Build
+        uses: jetli/trunk-action@v0.2.0
+        with:
+          version: 'latest'
+        shell: sh
+        run:
+          trunk build --release
 
-    - name: Archive artifact
-      shell: sh
-      if: runner.os == 'Linux'
-      run: |
-        chmod -c -R +rX "$INPUT_PATH" | while read line; do
-          echo "::warning title=Invalid file permissions automatically fixed::$line"
-        done
-        tar \
-          --dereference --hard-dereference \
-          --directory "$INPUT_PATH" \
-          -cvf "$RUNNER_TEMP/artifact.tar" \
-          .
-      env:
-        INPUT_PATH: 'dist/'
+      - name: Archive artifact
+        shell: sh
+        if: runner.os == 'Linux'
+        run: |
+          chmod -c -R +rX "$INPUT_PATH" | while read line; do
+            echo "::warning title=Invalid file permissions automatically fixed::$line"
+          done
+          tar \
+            --dereference --hard-dereference \
+            --directory "$INPUT_PATH" \
+            -cvf "$RUNNER_TEMP/artifact.tar" \
+            .
+        env:
+          INPUT_PATH: 'dist/'
 
-    - name: Upload artifact
-      uses: actions/upload-artifact@main
-      with:
-        name: 'github-pages'
-        path: ${{ runner.temp }}/artifact.tar
-        retention-days: 1000
+      - name: Upload artifact
+        uses: actions/upload-artifact@main
+        with:
+          name: 'github-pages'
+          path: ${{ runner.temp }}/artifact.tar
+          retention-days: 1000
