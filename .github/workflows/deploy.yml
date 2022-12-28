@@ -3,8 +3,7 @@ on:
   push:
     branches:
       - main
-runs:
-  using: composite
+jobs:
   steps:
     - name: Build
       uses: jetli/trunk-action@v0.2.0
