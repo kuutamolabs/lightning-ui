@@ -468,7 +468,6 @@ dependencies = [
  "console_error_panic_hook",
  "console_log",
  "log",
- "once_cell",
  "reqwest",
  "sycamore",
  "sycamore-router",
