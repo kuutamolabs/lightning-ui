@@ -10,7 +10,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Install rust toolchain
+      - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
@@ -19,9 +19,10 @@ jobs:
           profile: minimal
 
       - name: Install Trunk
-        uses: jetli/trunk-action@v0.2.0
+        uses: actions-rs/install@v0.1
         with:
-          version: 'latest'
+          crate: trunk
+          version: latest
 
       - name: Build
         shell: sh
