@@ -13,7 +13,10 @@ jobs:
       - name: Install rust toolchain
         uses: actions-rs/toolchain@v1
         with:
+          toolchain: stable
           target: wasm32-unknown-unknown
+          override: true
+          profile: minimal
 
       - name: Install Trunk
         uses: jetli/trunk-action@v0.2.0
