@@ -40,6 +40,7 @@ dependencies = [
 [[package]]
 name = "api"
 version = "0.1.0"
+source = "git+https://github.com/kuutamolabs/lightning-knd?rev=f2cf30153239b746fb8c589ac6f0a741490bb918#f2cf30153239b746fb8c589ac6f0a741490bb918"
 dependencies = [
  "serde",
  "serde_json",
