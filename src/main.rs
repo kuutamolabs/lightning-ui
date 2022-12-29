@@ -14,11 +14,11 @@ use sycamore_router::{HistoryIntegration, Route, Router};
 
 #[derive(Route)]
 enum AppRoutes {
-    #[to("/")]
+    #[to("/lightning-ui")]
     Index,
-    #[to("/home")]
+    #[to("/lightning-ui/home")]
     Home,
-    #[to("/about")]
+    #[to("/lightning-ui/about")]
     About,
     #[not_found]
     NotFound,
