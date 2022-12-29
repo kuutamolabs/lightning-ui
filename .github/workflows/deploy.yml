@@ -20,7 +20,7 @@ jobs:
       - uses: cachix/install-nix-action@v18
         with:
           nix_path: nixpkgs=channel:nixos-unstable-small
-      - run: nix-build
+      - run: nix build
 
       - name: Archive artifact
         shell: sh
