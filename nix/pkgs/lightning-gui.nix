@@ -2,6 +2,11 @@
 , makeRustPlatform
 , lib
 , clippy
+, pkg-config
+, openssl
+, trunk
+, wasm-bindgen-cli
+, binaryen
 , runCommand
 , pkgs
 , enableLint ? false
@@ -30,16 +35,26 @@ rustPlatformWasm.buildRustPackage ({
     install -D ${../../Cargo.toml} $out/Cargo.toml
     install -D ${../../Cargo.lock} $out/Cargo.lock
     install -D ${../../.cargo/config.toml} $out/.cargo/config.toml
+    install -D ${../../index.html} $out/index.html
+    install -D ${../../404.html} $out/404.html
     cp -r ${../../src} $out/src
   '';
   cargoLock.lockFile = ../../Cargo.lock;
   cargoLock.outputHashes = {
-    "api-0.1.0" = "sha256-iqr/h9jqNUVoLkikeBsQNqhWDSWOyzRJpshugZpnVi0=";
+    "api-0.1.0" = "sha256-1/8yYINoNaP1x4D7fxv9wwCHksECKfKSKvRHQ9TKi0Y=";
   };
-  buildInputs = [ ];
-  nativeBuildInputs = [ rustWithWasmTarget ] ++ lib.optionals enableLint [ clippy ];
+  buildInputs = [ openssl ];
+  nativeBuildInputs = [ rustWithWasmTarget pkg-config trunk wasm-bindgen-cli binaryen ] ++ lib.optionals enableLint [ clippy ];
 
   doCheck = enableTests;
+
+  buildPhase = ''
+    trunk build --release --public-url /lightning-ui
+  '';
+
+  installPhase = ''
+    cp -r dist $out
+  '';
 
   meta = with lib; {
     description = "Bitcoin Lightning Web GUI";
@@ -54,6 +69,8 @@ rustPlatformWasm.buildRustPackage ({
     install -D ${../../Cargo.toml} $out/Cargo.toml
     install -D ${../../Cargo.lock} $out/Cargo.lock
     install -D ${../../.cargo/config.toml} $out/.cargo/config.toml
+    install -D ${../../index.html} $out/index.html
+    install -D ${../../404.html} $out/404.html
     cp -r ${../../src} $out/src
   '';
   buildPhase = ''

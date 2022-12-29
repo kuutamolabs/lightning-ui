@@ -16,24 +16,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Install Rust toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          target: wasm32-unknown-unknown
-          override: true
-          profile: minimal
-
-      - name: Install Trunk
-        uses: actions-rs/install@v0.1
-        with:
-          crate: trunk
-          version: latest
-
       - name: Build
-        shell: sh
-        run:
-          trunk build --release --public-url /lightning-ui
+      - uses: cachix/install-nix-action@v18
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable-small
+      - run: nix-build
 
       - name: Archive artifact
         shell: sh
@@ -48,7 +35,7 @@ jobs:
             -cvf "$RUNNER_TEMP/artifact.tar" \
             .
         env:
-          INPUT_PATH: 'dist/'
+          INPUT_PATH: 'result/'
 
       - name: Upload artifact
         uses: actions/upload-artifact@main

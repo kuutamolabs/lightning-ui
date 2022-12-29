@@ -23,7 +23,6 @@
 
             # rust dev
             pkgs.cargo-watch
-            pkgs.trunk
           ]
           ++ self'.packages.lightning-gui.buildInputs;
         RUST_BACKTRACE = 1;
