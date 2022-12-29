@@ -4,6 +4,8 @@ lint:
 fix:
   treefmt
   cargo clippy --all-targets --all-features --fix --allow-dirty --allow-staged  -- -D warnings
+serve:
+  trunk serve --public-url /lightning-ui
 
 test:
   cargo test --all --all-features
