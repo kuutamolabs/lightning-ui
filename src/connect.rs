@@ -19,7 +19,7 @@ pub fn Connect<G: Html>(cx: Scope, api: Arc<Api>) -> View<G> {
             if let Err(e) = api.get_info().await {
                 status.set(e.to_string());
             } else {
-                navigate("/home");
+                navigate("/lightning-ui/home");
             }
         });
     };
