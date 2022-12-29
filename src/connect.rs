@@ -3,7 +3,10 @@ use std::sync::Arc;
 use sycamore::{futures::spawn_local_scoped, prelude::*};
 use sycamore_router::navigate;
 
-use crate::api::{Api, DEFAULT_URL};
+use crate::{
+    api::{Api, DEFAULT_URL},
+    AppRoutes,
+};
 
 #[component]
 pub fn Connect<G: Html>(cx: Scope, api: Arc<Api>) -> View<G> {
@@ -19,7 +22,7 @@ pub fn Connect<G: Html>(cx: Scope, api: Arc<Api>) -> View<G> {
             if let Err(e) = api.get_info().await {
                 status.set(e.to_string());
             } else {
-                navigate("/lightning-ui/home");
+                navigate(&AppRoutes::Home.to_string());
             }
         });
     };

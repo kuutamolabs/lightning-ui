@@ -1,3 +1,4 @@
+mod about;
 mod api;
 mod connect;
 mod home;
@@ -5,15 +6,15 @@ mod home;
 use std::sync::Arc;
 
 use crate::api::Api;
+use about::About;
 use connect::Connect;
 use home::Home;
 use log::debug;
-use sycamore::builder::prelude::*;
 use sycamore::prelude::*;
 use sycamore_router::{HistoryIntegration, Route, Router};
 
 #[derive(Route)]
-enum AppRoutes {
+pub enum AppRoutes {
     #[to("/lightning-ui")]
     Index,
     #[to("/lightning-ui/home")]
@@ -24,9 +25,15 @@ enum AppRoutes {
     NotFound,
 }
 
-#[component]
-fn About<G: Html>(cx: Scope) -> View<G> {
-    div().c(p().t("Lightning Network GUI by Kuutomo")).view(cx)
+impl ToString for AppRoutes {
+    fn to_string(&self) -> String {
+        match self {
+            AppRoutes::Index => "/lightning-ui".to_string(),
+            AppRoutes::Home => "/lightning-ui/home".to_string(),
+            AppRoutes::About => "/lightning-ui/about".to_string(),
+            _ => unreachable!(),
+        }
+    }
 }
 
 #[component]
