@@ -53,7 +53,9 @@ rustPlatformWasm.buildRustPackage ({
   '';
 
   installPhase = ''
+    runHook preInstall
     cp -r dist $out
+    runHook postInstall
   '';
 
   meta = with lib; {
