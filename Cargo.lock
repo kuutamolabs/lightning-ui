@@ -472,6 +472,7 @@ dependencies = [
  "reqwest",
  "sycamore",
  "sycamore-router",
+ "web-sys",
 ]
 
 [[package]]

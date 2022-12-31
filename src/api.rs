@@ -25,8 +25,7 @@ impl Api {
         })
     }
 
-    pub fn connect(&self, url: String, macaroon: String) {
-        debug!("Connecting to {}", url);
+    pub fn set_macaroon(&self, macaroon: String) {
         let mut headers = HeaderMap::new();
         headers.insert("macaroon", HeaderValue::from_str(&macaroon).unwrap());
         let client = reqwest::ClientBuilder::new()
@@ -34,6 +33,9 @@ impl Api {
             .build()
             .unwrap();
         self.client.replace(client);
+    }
+
+    pub fn set_url(&self, url: String) {
         self.url.replace(url);
     }
 
