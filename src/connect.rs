@@ -1,23 +1,28 @@
-use std::sync::Arc;
-
 use sycamore::{futures::spawn_local_scoped, prelude::*};
 use sycamore_router::navigate;
 
 use crate::{
     api::{Api, DEFAULT_URL},
+    storage::LocalStorage,
     AppRoutes,
 };
 
 #[component]
-pub fn Connect<G: Html>(cx: Scope, api: Arc<Api>) -> View<G> {
-    let url = create_signal(cx, DEFAULT_URL.to_string());
-    let macaroon = create_signal(cx, String::default());
+pub fn Connect<G: Html>(cx: Scope) -> View<G> {
+    let storage = use_context::<LocalStorage>(cx);
+    let url = storage.get_url().unwrap_or_else(|| DEFAULT_URL.to_string());
+    let url = create_signal(cx, url);
+    let macaroon = storage.get_macaroon().unwrap_or_default();
+    let macaroon = create_signal(cx, macaroon);
     let status = create_signal(cx, String::default());
 
-    let api = api;
+    let api = use_context::<Api>(cx);
     let connect = move |_| {
-        api.connect(url.get().to_string(), macaroon.get().to_string());
-        let api = api.clone();
+        api.set_macaroon(macaroon.get().to_string());
+        api.set_url(url.get().to_string());
+        storage.set_url(&url.get().to_string()).unwrap();
+        storage.set_macaroon(&macaroon.get().to_string()).unwrap();
+
         spawn_local_scoped(cx, async move {
             if let Err(e) = api.get_info().await {
                 status.set(e.to_string());
