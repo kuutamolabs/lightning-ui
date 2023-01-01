@@ -8,7 +8,7 @@ use reqwest::{
     Client,
 };
 
-pub static DEFAULT_URL: &str = "http://127.0.0.1:2244";
+pub static DEFAULT_URL: &str = "https://127.0.0.1:40002";
 
 pub struct Api {
     client: RefCell<Client>,
@@ -18,7 +18,7 @@ pub struct Api {
 impl Api {
     pub fn new() -> Result<Api> {
         let client = reqwest::ClientBuilder::new().build()?;
-        let url = "http://127.0.0.1:40002".to_string();
+        let url = DEFAULT_URL.to_string();
         Ok(Api {
             client: RefCell::new(client),
             url: RefCell::new(url),
