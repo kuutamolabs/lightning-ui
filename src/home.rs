@@ -30,7 +30,7 @@ async fn GetInfo<G: Html>(cx: Scope<'_>) -> View<G> {
         table {
             tr {
                 td { "Node ID:" }
-                td { (info.identity_pubkey.clone()) }
+                td { (info.id.clone()) }
             }
             tr {
                 td { "Alias:" }

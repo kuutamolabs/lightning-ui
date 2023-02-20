@@ -41,7 +41,7 @@ rustPlatformWasm.buildRustPackage ({
   '';
   cargoLock.lockFile = ../../Cargo.lock;
   cargoLock.outputHashes = {
-    "api-0.1.0" = "sha256-1/8yYINoNaP1x4D7fxv9wwCHksECKfKSKvRHQ9TKi0Y=";
+    "api-0.1.0" = "sha256-ZtnCsmt1DhYaqqvNJr14hwu/rOJO73OEypjoqeKmuAg=";
   };
   buildInputs = [ openssl ];
   nativeBuildInputs = [ rustWithWasmTarget pkg-config trunk wasm-bindgen-cli binaryen ] ++ lib.optionals enableLint [ clippy ];
