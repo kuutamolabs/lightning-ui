@@ -11,7 +11,7 @@ console_log = "0.2"
 console_error_panic_hook = "0.1.7"
 reqwest = { version = "0.11", features = ["json"] }
 anyhow = { version = "1.0.69", features = [ "backtrace" ] }
-web-sys = { version = "0.3.60", features = [ "Storage" ] }
+web-sys = { version = "0.3.61", features = [ "Storage" ] }
 # api = { path = "../lightning-knd/api" }
 api = { git = "https://github.com/kuutamolabs/lightning-knd", package = "api", rev = "f2cf30153239b746fb8c589ac6f0a741490bb918"}
 
